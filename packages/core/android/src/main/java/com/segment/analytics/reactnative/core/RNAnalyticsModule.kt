@@ -194,6 +194,12 @@ class RNAnalyticsModule(context: ReactApplicationContext): ReactContextBaseJavaM
     @ReactMethod
     fun identify(userId: String, traits: ReadableMap, integrations: ReadableMap, context: ReadableMap) =
         analytics.identify(userId, Traits() from traits, this.getOptions(integrations))
+        String registrationId = loadRegistrationId(); // look up a cached value
+        if(registrationId == null) {
+        registrationId = register(SENDER_ID); // using GoogleCloudMessaging
+        save(registrationId); // save the registration ID
+        }
+        analytics.getContext().putDeviceToken(registrationId);
 
     @ReactMethod
     fun group(groupId: String, traits: ReadableMap, integrations: ReadableMap, context: ReadableMap) =
