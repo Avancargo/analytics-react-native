@@ -196,8 +196,8 @@ class RNAnalyticsModule(context: ReactApplicationContext): ReactContextBaseJavaM
         analytics.identify(userId, Traits() from traits, this.getOptions(integrations))
         String registrationId = loadRegistrationId(); // look up a cached value
         if(registrationId == null) {
-        registrationId = register(SENDER_ID); // using GoogleCloudMessaging
-        save(registrationId); // save the registration ID
+            registrationId = register(SENDER_ID); // using GoogleCloudMessaging
+            save(registrationId); // save the registration ID
         }
         analytics.getContext().putDeviceToken(registrationId);
 
